@@ -1,0 +1,38 @@
+syntax = "proto3";
+package tutorial;
+import "patch/go.proto";
+option go_package = "goods.ru/prototest/goods_response";
+
+message ResponseHead {
+  Result result = 1 [(go.field) = {tags: 'xml:"result"'}];
+  repeated Error errors = 2 [(go.field) = {tags: 'xml:"errors>error"'}];
+}
+
+message Errors {
+  repeated Error error = 1 [(go.field) = {tags: 'xml:"error"'}];
+  }
+
+message Response {
+  ResponseHead responseHead = 1 [(go.field) = {tags: 'xml:"responseHead"'}];
+  ResponseBody responseBody = 2 [(go.field) = {tags: 'xml:"responseBody"'}];
+}
+
+message ResponseBody {
+  Meta meta = 1 [(go.field) = {tags: 'xml:"meta"'}];
+}
+
+enum Result {
+  ERROR = 0;
+  OK = 1;
+}
+
+message Error {
+  int32 code = 1 [(go.field) = {tags: 'xml:"code,attr"'}];
+  string description = 2 [(go.field) = {tags: 'xml:"description,attr"'}];
+}
+
+message Meta {
+  int64 num = 2 [(go.field) = {tags: 'xml:"num,attr"'}];
+  string test = 1 [(go.field) = {tags: 'xml:"test"'}];
+}
+
